@@ -1,0 +1,4 @@
+FROM centos7/mongo:3.4  
+MAINTAINER linuxwt <tengwanginit@gmail.com>
+
+ENTRYPOINT ["/usr/bin/mongos"]

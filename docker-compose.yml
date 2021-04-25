@@ -1,0 +1,96 @@
+config_tengwang1:  
+  restart: always
+  image: centos7/mongo:3.4
+  container_name: config_tengwang1
+  volumes:
+     - /etc/localtime:/etc/localtime
+     - /etc/timezone:/etc/timezone
+     - /data/tengwang/mongo:/data/db
+     - $PWD/enabled:/sys/kernel/mm/transparent_hugepage/enabled
+     - $PWD/defrag:/sys/kernel/mm/transparent_hugepage/defrag
+     - $PWD/keyfile.dat:/data/db/keyfile.dat
+  ulimits:
+     nofile:
+       soft: 300000
+       hard: 300000
+  ports:
+     - 27117:27017
+  command:  --dbpath /data/db/data/config/data --logpath /data/db/data/config/log/config.log --logappend --storageEngine wiredTiger --wiredTigerEngineConfigString="cache_size=300M" -replSet crs --configsvr --port 27017 --slowms=500 --keyFile /data/db/keyfile.dat --auth
+shard1_tengwang1:  
+  restart: always
+  image: centos7/mongo:3.4
+  container_name: shard1_tengwang1
+  volumes:
+     - /etc/localtime:/etc/localtime
+     - /etc/timezone:/etc/timezone
+     - /data/tengwang/mongo:/data/db
+     - $PWD/enabled:/sys/kernel/mm/transparent_hugepage/enabled
+     - $PWD/defrag:/sys/kernel/mm/transparent_hugepage/defrag
+     - $PWD/keyfile.dat:/data/db/keyfile.dat
+  ulimits:
+     nofile:
+       soft: 300000
+       hard: 300000
+  ports:
+     - 27118:27017
+  command:  --dbpath /data/db/data/shard1/data --logpath /data/db/data/shard1/log/shard1.log --logappend --storageEngine wiredTiger --wiredTigerEngineConfigString="cache_size=300M" -replSet shard1 --oplogSize 2000 --shardsvr --port 27017 --slowms=500  --keyFile /data/db/keyfile.dat --auth
+ 
+
+shard2_tengwang1:  
+  restart: always
+  image: centos7/mongo:3.4
+  container_name: shard2_tengwang1
+  volumes:
+     - /etc/localtime:/etc/localtime
+     - /etc/timezone:/etc/timezone
+     - /data/tengwang/mongo:/data/db
+     - $PWD/enabled:/sys/kernel/mm/transparent_hugepage/enabled
+     - $PWD/defrag:/sys/kernel/mm/transparent_hugepage/defrag
+     - $PWD/keyfile.dat:/data/db/keyfile.dat
+  ulimits:
+     nofile:
+       soft: 300000
+       hard: 300000
+  ports:
+     - 27119:27017
+  command:   --dbpath /data/db/data/shard2/data --logpath /data/db/data/shard2/log/shard2.log --logappend --storageEngine wiredTiger --wiredTigerEngineConfigString="cache_size=300M" -replSet shard2 --oplogSize 2000 --shardsvr --port 27017 --slowms=500   --keyFile /data/db/keyfile.dat --auth
+
+
+shard3_tengwang1:  
+  restart: always
+  image: centos7/mongo:3.4
+  container_name: shard3_tengwang1
+  volumes:
+     - /etc/localtime:/etc/localtime
+     - /etc/timezone:/etc/timezone
+     - /data/tengwang/mongo:/data/db
+     - $PWD/enabled:/sys/kernel/mm/transparent_hugepage/enabled
+     - $PWD/defrag:/sys/kernel/mm/transparent_hugepage/defrag
+     - $PWD/keyfile.dat:/data/db/keyfile.dat
+  ulimits:
+     nofile:
+       soft: 300000
+       hard: 300000
+  ports:
+     - 27120:27017
+  command:   --dbpath /data/db/data/shard3/data --logpath /data/db/data/shard3/log/shard3.log --logappend --storageEngine wiredTiger --wiredTigerEngineConfigString="cache_size=300M" -replSet shard3 --oplogSize 2000 --shardsvr --port 27017 --slowms=500  --keyFile /data/db/keyfile.dat --auth
+
+
+mongos_tengwang1:  
+  restart: always
+  image: centos7/mongos:3.4
+  container_name: mongos_tengwang1
+  volumes:
+     - /etc/localtime:/etc/localtime
+     - /etc/timezone:/etc/timezone
+     - /data/tengwang/mongo:/data/db
+     - $PWD/enabled:/sys/kernel/mm/transparent_hugepage/enabled
+     - $PWD/defrag:/sys/kernel/mm/transparent_hugepage/defrag
+     - $PWD/keyfile.dat:/data/db/keyfile.dat
+  ulimits:
+     nofile:
+       soft: 300000
+       hard: 300000
+  ports:
+     - 27121:27017
+  command:   --configdb crs/118.31.244.127:27117,118.31.244.177:27117,118.31.244.21:27117 --logpath /data/db/data/mongos/log/mongos.log --logappend --port 27017  --keyFile /data/db/keyfile.dat 
