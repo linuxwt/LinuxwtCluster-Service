@@ -1,2 +1,1 @@
-# LinuxwtCluster-Service   
-# 常用的集群服务部署
+# 本仓库为使用Heketi来自动配置GlusterFS复制集群作为kubernetes集群的共享存储以及kubernetes动态pv实践操作
