@@ -7,5 +7,5 @@
 |:------|:------|   
 |Kubernetes|v1.19.0| 
 |Docker|docker-ce 19.03.6|  
-|Hketi|v10.0.0|   
+|Heketi|v10.0.0|   
 |GlusterFS|v7.1|   
