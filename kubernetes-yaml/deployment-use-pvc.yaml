@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment 
+metadata: 
+  name: nginx-gfs
+spec: 
+  replicas: 3
+  selector:
+    matchLabels:
+      name: nginx
+  template: 
+    metadata: 
+      labels: 
+        name: nginx 
+    spec: 
+      containers: 
+        - name: nginx 
+          image: nginx 
+          imagePullPolicy: IfNotPresent
+          ports: 
+            - containerPort: 80
+          volumeMounts:
+            - name: nginx-gfs-html
+              mountPath: "/usr/share/nginx/html"
+            - name: nginx-gfs-conf
+              mountPath: "/etc/nginx/conf.d"
+      volumes:
+      - name: nginx-gfs-html
+        persistentVolumeClaim:
+          claimName: glusterfs-nginx-html
+      - name: nginx-gfs-conf
+        persistentVolumeClaim:
+          claimName: glusterfs-nginx-conf
