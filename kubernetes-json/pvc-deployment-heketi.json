@@ -1,0 +1,42 @@
+{
+  "kind": "List",
+  "apiVersion": "v1",
+  "items": [
+    {
+      "kind": "PersistentVolumeClaim",
+      "apiVersion": "v1",
+      "metadata": {
+        "name": "glusterfs-nginx-html"
+      },
+      "spec": {
+        "accessModes": [
+          "ReadWriteMany"
+        ],
+        "storageClassName": "gluster-heketi",
+        "resources": {
+          "requests": {
+            "storage": "500Mi"
+          }
+        }
+      }
+    },
+    {
+      "kind": "PersistentVolumeClaim",
+      "apiVersion": "v1",
+      "metadata": {
+        "name": "glusterfs-nginx-conf"
+      },
+      "spec": {
+        "accessModes": [
+          "ReadWriteMany"
+        ],
+        "storageClassName": "gluster-heketi",
+        "resources": {
+          "requests": {
+            "storage": "10Mi"
+          }
+        }
+      }
+    }
+  ]
+}
