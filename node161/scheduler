@@ -1,0 +1,1 @@
+KUBE_SCHEDULER_ARGS="--kubeconfig=/etc/kubernetes/kubeconfig --logtostderr=false --log-dir=/var/log/kubernetes --v=0"

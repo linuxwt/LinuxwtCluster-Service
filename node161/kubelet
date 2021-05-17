@@ -1,0 +1,1 @@
+KUBELET_ARGS="--kubeconfig=/etc/kubernetes/kubeconfig --hostname-override=192.168.0.161 --logtostderr=false  --log-dir=/var/log/kubernetes --pod-infra-container-image=registry.cn-hangzhou.aliyuncs.com/google-containers/pause-amd64:3.0 --v=0"  
