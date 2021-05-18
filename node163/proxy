@@ -1,1 +1,1 @@
-KUBE_PROXY_ARGS="--kubeconfig=/etc/kubernetes/kubeconfig --hostname-override=192.168.0.163  --cluster-cidr=10.0.0.0/24 --logtostderr=false --log-dir=/var/log/kubernetes --v=2"
+KUBE_PROXY_ARGS="--kubeconfig=/etc/kubernetes/kubeconfig --hostname-override=192.168.0.163  --cluster-cidr=10.0.0.0/24 --proxy-mode=ipvs  --logtostderr=false --log-dir=/var/log/kubernetes --v=2"
