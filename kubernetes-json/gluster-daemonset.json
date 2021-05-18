@@ -14,14 +14,14 @@
     "spec": {
         "selector": {
             "matchLabels": {
-                "glusterfs-node": "daemonset"
+                "glusterfs-node": "pod"
             }
         },
         "template": {
             "metadata": {
                 "name": "glusterfs",
                 "labels": {
-                    "glusterfs-node": "daemonset"
+                    "glusterfs-node": "pod"
                 }
             },
             "spec": {
