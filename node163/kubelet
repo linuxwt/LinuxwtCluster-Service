@@ -1,1 +1,27 @@
-KUBELET_ARGS="--kubeconfig=/etc/kubernetes/kubeconfig --hostname-override=192.168.0.163 --logtostderr=false  --log-dir=/var/log/kubernetes --pod-infra-container-image=registry.cn-hangzhou.aliyuncs.com/google-containers/pause-amd64:3.0 --v=0"  
+apiVersion: v1
+kind: Config
+users:
+- name: kubelet
+  user:
+    client-certificate: /root/ca/kubelet_client.crt
+    client-key: /root/ca/kubelet_client.key
+- name: proxy
+  user: 
+    client-certificate: /root/ca/kubelet_client.crt
+    client-key: /root/ca/kubelet_client.key
+clusters:
+- name: local
+  cluster:
+    certificate-authority: /root/ca/ca.crt
+    server: https://192.168.0.161:6443
+contexts:
+- context:
+    cluster: local
+    user: kubelet
+  name: my-context1
+- context:
+    cluster: local
+    user: proxy
+  name: my-context2
+current-context: my-context1
+current-context: my-context2
