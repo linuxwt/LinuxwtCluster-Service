@@ -1,4 +1,4 @@
-## 本仓库为使用二进制方式来部署Kubernetes集群添加CA数字认证
+## 本仓库为使用二进制方式来部署的Kubernetes集群添加CA数字认证
 
 ##  [Kubernetes二进制集群CA数字证书配置](https://linuxwt.com/kubernetesquan-wei-zhi-nan-xue-xi-bi-ji-di-er-pian/)
 
