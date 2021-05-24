@@ -1,60 +1,91 @@
 {
-  "apiVersion": "apps/v1",
-  "kind": "Deployment",
-  "metadata": {
-    "name": "nginx-gfs"
-  },
-  "spec": {
-    "replicas": 3,
-    "selector": {
-      "matchLabels": {
-        "name": "nginx"
-      }
-    },
-    "template": {
+  "kind": "List",
+  "apiVersion": "v1",
+  "items": [
+    {
+      "kind": "Deployment",
       "metadata": {
-        "labels": {
-          "name": "nginx"
-        }
+        "name": "nginx-gfs"
       },
       "spec": {
-        "containers": [
-          {
-            "name": "nginx",
-            "image": "nginx",
-            "imagePullPolicy": "IfNotPresent",
-            "ports": [
+        "replicas": 3,
+        "selector": {
+          "matchLabels": {
+            "name": "nginx"
+          }
+        },
+        "template": {
+          "metadata": {
+            "labels": {
+              "name": "nginx"
+            }
+          },
+          "spec": {
+            "containers": [
               {
-                "containerPort": 80
+                "name": "nginx",
+                "image": "nginx",
+                "imagePullPolicy": "IfNotPresent",
+                "ports": [
+                  {
+                    "containerPort": 80
+                  }
+                ],
+                "volumeMounts": [
+                  {
+                    "name": "nginx-gfs-html",
+                    "mountPath": "/usr/share/nginx/html"
+                  },
+                  {
+                    "name": "nginx-gfs-conf",
+                    "mountPath": "/etc/nginx/conf.d"
+                  }
+                ]
               }
             ],
-            "volumeMounts": [
+            "volumes": [
               {
                 "name": "nginx-gfs-html",
-                "mountPath": "/usr/share/nginx/html"
+                "persistentVolumeClaim": {
+                  "claimName": "glusterfs-nginx-html"
+                }
               },
               {
                 "name": "nginx-gfs-conf",
-                "mountPath": "/etc/nginx/conf.d"
+                "persistentVolumeClaim": {
+                  "claimName": "glusterfs-nginx-conf"
+                }
               }
             ]
           }
-        ],
-        "volumes": [
+        }
+      }
+    },
+    {
+      "kind": "Service",
+      "apiVersion": "v1",
+      "metadata": {
+        "name": "nginx-svc",
+        "labels": {
+          "glusterfs": "nginx-service",
+          "deploy-nginx": "support"
+        },
+        "annotations": {
+          "description": "Exposes Nginx Service"
+        }
+      },
+      "spec": {
+        "selector": {
+          "name": "nginx"
+        },
+        "ports": [
           {
-            "name": "nginx-gfs-html",
-            "persistentVolumeClaim": {
-              "claimName": "glusterfs-nginx-html"
-            }
-          },
-          {
-            "name": "nginx-gfs-conf",
-            "persistentVolumeClaim": {
-              "claimName": "glusterfs-nginx-conf"
-            }
+            "name": "nginx",
+            "port": 80,
+            "targetPort": 80
           }
         ]
       }
     }
-  }
+  ]
 }
