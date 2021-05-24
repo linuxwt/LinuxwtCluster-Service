@@ -30,3 +30,20 @@ spec:
       - name: nginx-gfs-conf
         persistentVolumeClaim:
           claimName: glusterfs-nginx-conf
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: nginx-svc
+  labels:
+    glusterfs: nginx-service
+    deploy-nginx: support
+  annotations:
+    description: Exposes Nginx Service
+spec:
+  selector:     
+    name: nginx    ##与deployments中template标签一致
+  ports:
+    - name: nginx
+      port: 80
+      targetPort: 80

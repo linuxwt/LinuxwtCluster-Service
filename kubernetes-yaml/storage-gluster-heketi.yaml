@@ -4,8 +4,8 @@ metadata:
   name: gluster-heketi
 provisioner: kubernetes.io/glusterfs
 parameters:
-  resturl: "http://192.168.0.160:36290"
-  clusterid: "de33190e73a211bf33d54c75afabe813"
+  resturl: "http://10.0.0.126:8080"
+  clusterid: "323e7dff66d0033cf940b96b66e818d1"
   restauthenabled: "true"
   restuser: "admin"
   restuserkey: "My Secret"
