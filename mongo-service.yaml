@@ -5,6 +5,7 @@ metadata:
   labels:
     name: mongo
 spec:
+  clusterIP: None
   ports:
   - port: 27017
     targetPort: 27017
