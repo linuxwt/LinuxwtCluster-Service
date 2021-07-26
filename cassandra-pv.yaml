@@ -1,0 +1,44 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: cassandra-storage-0
+  labels:
+    type: local
+    app: cassandra
+spec:
+  capacity:
+    storage: 4Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: /tmp/data/cassandra-storage-0
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: cassandra-storage-1
+  labels:
+    type: local
+    app: cassandra
+spec:
+  capacity:
+    storage: 4Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: /tmp/data/cassandra-storage-1
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: cassandra-storage-2
+  labels:
+    type: local
+    app: cassandra
+spec:
+  capacity:
+    storage: 4Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: /tmp/data/cassandra-storage-2
