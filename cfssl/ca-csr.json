@@ -1,0 +1,19 @@
+{
+  "CN": "kubernetes",
+  "key": {
+      "algo": "rsa",
+      "size": 2048
+  },
+  "names": [
+    {
+      "C": "CN",
+      "ST": "Hubei",
+      "L": "shiyan",
+      "O": "k8s",
+      "OU": "system"
+    }
+  ],
+  "ca": {
+          "expiry": "87600h"
+  }
+}
