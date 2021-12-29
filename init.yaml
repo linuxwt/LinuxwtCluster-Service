@@ -1,0 +1,26 @@
+apiVersion: kubeadm.k8s.io/v1beta2
+kind: ClusterConfiguration
+imageRepository: registry.aliyuncs.com/google_containers
+kubernetesVersion: v1.21.1
+controlPlaneEndpoint: "10.0.0.29:16443"
+dns: 
+  type: CoreDNS
+etcd:
+    external:
+        endpoints:
+        - https://10.0.0.30:2379
+        - https://10.0.0.31:2379
+        - https://10.0.0.32:2379
+        caFile: /etc/kubernetes/pki/etcd/ca.pem
+        certFile: /etc/kubernetes/pki/etcd.pem
+        keyFile: /etc/kubernetes/pki/etcd-key.pem
+networking: 
+  serviceSubnet: "10.96.0.0/16"   
+  podSubnet: "10.244.0.0/16" 
+  dnsDomain: "cluster.local"   
+---
+apiVersion: kubeproxy.config.k8s.io/v1alpha1
+kind: KubeProxyConfiguration
+featureGates:
+  SupportIPVSProxyMode: true
+mode: ipvs
