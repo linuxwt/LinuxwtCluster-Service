@@ -1,4 +1,6 @@
 ## [ansible结合shell部署k8s二进制高可用集群](https://linuxwt.com/ansiblejie-he-shelljiao-ben-wan-zheng-bu-shu/)
+## [Kubernetes知识点---二进制部署kubernetes高可用集群](https://linuxwt.com/kuberneteszhi-shi-dian-er-jin-zhi-bu-shu-kubernetesgao-ke-yong-ji-qun/)
+
 ### 各个脚本作用   
 mount.sh 挂载本地镜像、创建本地镜像源 部署yumdownloader、createrepo、vsftpd、expect、lrzsz、epel、ansible、nginx、haproxy、keepalived   
 sshkey.sh 批量传输公钥至所有节点 批量修改所有节点主机名 生成host解析列表   
