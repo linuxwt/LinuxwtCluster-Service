@@ -1,2 +1,1 @@
-# LinuxwtCluster-Service   
-# 常用的集群服务部署
+# 二进制部署Greenplum集群
