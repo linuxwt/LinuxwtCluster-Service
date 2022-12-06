@@ -1,0 +1,20 @@
+10.235.9.61 | CHANGED | rc=0 >>
+/dev/sdb1: UUID="e473284a-0cbf-4d80-aa9c-8e178e17ddf6" TYPE="xfs" 
+10.235.9.65 | CHANGED | rc=0 >>
+/dev/sdb1: UUID="e89fc424-df78-4ba8-aded-c70bebb1de24" TYPE="xfs" 
+10.235.9.67 | CHANGED | rc=0 >>
+/dev/sdb1: UUID="6896a6db-cc94-4e74-a82a-791711549bb6" TYPE="xfs" 
+10.235.9.66 | CHANGED | rc=0 >>
+/dev/sdb1: UUID="b15df310-4bc1-453b-bd14-4b28ae92ecfe" TYPE="xfs" 
+10.235.9.64 | CHANGED | rc=0 >>
+/dev/sdb1: UUID="74fc650e-54bf-4b61-89a4-f192de1aab69" TYPE="xfs" 
+10.235.9.62 | CHANGED | rc=0 >>
+/dev/sdb1: UUID="fd3ffec6-4fb0-4ad7-922d-36310eefd0ea" TYPE="xfs" 
+10.235.9.63 | CHANGED | rc=0 >>
+/dev/sdb1: UUID="2237e1fe-e396-4c50-9a19-eb3fb2307472" TYPE="xfs" 
+10.235.9.70 | CHANGED | rc=0 >>
+/dev/sdb1: UUID="ea7dd268-1d79-4cb4-b13d-e95a2b5abb8f" TYPE="xfs" 
+10.235.9.69 | CHANGED | rc=0 >>
+/dev/sdb1: UUID="dd730851-ea94-4d82-82f4-917b083d613c" TYPE="xfs" 
+10.235.9.71 | CHANGED | rc=0 >>
+/dev/sdb1: UUID="dadac678-b62f-46a6-9ae6-7f049b6da51c" TYPE="xfs" 

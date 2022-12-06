@@ -1,0 +1,62 @@
+apiVersion: kubeadm.k8s.io/v1beta2
+kind: InitConfiguration
+localAPIEndpoint:
+  advertiseAddress: 10.235.9.61
+  bindPort: 6443
+nodeRegistration:
+  criSocket: /var/run/dockershim.sock
+  taints: null
+  kubeletExtraArgs:
+    node-ip: 10.235.9.61,2409:807C:5A06:0001:0000:0000:0104:xxxx
+---
+apiVersion: kubeadm.k8s.io/v1beta2
+kind: ClusterConfiguration
+imageRepository: registry.aliyuncs.com/google_containers
+kubernetesVersion: v1.21.1
+controlPlaneEndpoint: "10.235.9.68:16444"
+dns:
+  type: CoreDNS
+etcd:
+    external:
+        endpoints:
+        - https://10.235.9.61:2379
+        - https://10.235.9.62:2379
+        - https://10.235.9.63:2379
+        caFile: /etc/kubernetes/pki/etcd/ca.pem
+        certFile: /etc/kubernetes/pki/etcd.pem
+        keyFile: /etc/kubernetes/pki/etcd-key.pem
+networking:
+  serviceSubnet: 100.66.0.0/16,fd00::/108
+  podSubnet: 100.64.0.0/16,fc00::/48
+  dnsDomain: "cluster.local"
+apiServer:
+  certSANs:
+  - 10.235.9.68
+  - 2409:807C:5A06:0001:0000:0000:0104:0944
+  - 127.0.0.1
+  - node61
+  - node62
+  - node63
+  - 10.235.9.61
+  - 2409:807C:5A06:0001:0000:0000:0104:xxxx
+  - 10.235.9.62
+  - 2409:807C:5A06:0001:0000:0000:0104:xxxx
+  - 10.235.9.63
+  - 2409:807C:5A06:0001:0000:0000:0104:xxxx
+  extraArgs:
+    service-cluster-ip-range: 100.66.0.0/16,fd00::/108
+    bind-address: "::"
+    secure-port: "6443"
+  timeoutForControlPlane: 4m0s
+scheduler:
+  extraArgs:
+    bind-address: "::"
+controllerManager:
+  extraArgs:
+    bind-address: "::"
+---
+apiVersion: kubeproxy.config.k8s.io/v1alpha1
+kind: KubeProxyConfiguration
+mode: ipvs
+bindAddress: "::"
+clusterCIDR: 100.64.0.0/16,fc00::/48

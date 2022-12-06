@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: nginx-test
+  name: nginx-test
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nginx-test
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: nginx-test
+    spec:
+      containers:
+      - image: 10.0.0.36:30002/library/nginx:latest
+        name: nginx
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 80
+        resources: {}
+        volumeMounts:
+        - name: nginx-pvc
+          path: /usr/shrae/nginx/html
+      volumes:
+      - name: nginx-pvc
+        persistentVolumeClaim:
+          claimName: nginx-pvc
+status: {}

@@ -1,0 +1,44 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: dnsutils-ds
+  labels:
+    app: dnsutils-ds
+spec:
+  ipFamilyPolicy: PreferDualStack
+  ipFamilies:
+  - IPv6
+  - IPv4
+  type: NodePort
+  selector:
+    app: dnsutils-ds
+  ports:
+  - name: http
+    port: 80
+    targetPort: 80
+    nodePort: 30001
+---
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: dnsutils-ds
+  labels:
+    addonmanager.kubernetes.io/mode: Reconcile
+spec:
+  selector:
+    matchLabels:
+      app: dnsutils-ds
+  template:
+    metadata:
+      labels:
+        app: dnsutils-ds
+    spec:
+      containers:
+      - name: my-dnsutils
+        image: 10.235.9.36:30002/library/tutum/dnsutils:latest
+        imagePullPolicy: IfNotPresent
+        command:
+          - sleep
+          - "3600"
+        ports:
+        - containerPort: 80
