@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment 
+metadata: 
+  name: nginx-deploy-rbd
+spec: 
+  replicas: 1
+  selector:
+    matchLabels:
+      name: nginx-deploy-rbd
+  template: 
+    metadata: 
+      labels: 
+        name: nginx-deploy-rbd
+    spec: 
+      containers: 
+        - name: nginx 
+          image: harbor.cmdicncf.org/cmdicncf/nginx:1.21.5
+          imagePullPolicy: IfNotPresent
+          ports: 
+            - containerPort: 80
+          volumeMounts:
+            - name: data
+              mountPath: "/usr/share/nginx/html"
+      volumes:
+      - name: data
+        persistentVolumeClaim:
+          claimName: nginx-rbd-pvc
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: nginx-rbd-pvc
+spec:
+  storageClassName: "rook-ceph-block"
+  accessModes: 
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 5Gi
+
+

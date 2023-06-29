@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata: 
+  name: nginx-sts-rbd
+spec: 
+  replicas: 3
+  serviceName: "nginx"
+  selector:
+    matchLabels:
+      name: nginx-sts-rbd
+  template: 
+    metadata: 
+      labels: 
+        name: nginx-sts-rbd
+    spec: 
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchExpressions:
+                  - key: name
+                    operator: In
+                    values:
+                      - nginx-sts-rbd
+              topologyKey: kubernetes.io/hostname
+      containers: 
+        - name: nginx 
+          image: harbor.cmdicncf.org/cmdicncf/nginx:1.21.5 
+          imagePullPolicy: IfNotPresent
+          ports: 
+            - containerPort: 80
+          volumeMounts:
+            - name: www
+              mountPath: "/usr/share/nginx/html"
+  volumeClaimTemplates:
+  - metadata:
+      name: www
+      annotations:
+        volume.beta.kubernetes.io/storage-class: "rook-ceph-block"
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      resources:
+        requests:
+          storage: 1Gi

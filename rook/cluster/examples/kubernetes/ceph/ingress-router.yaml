@@ -1,0 +1,44 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: redirect-https-ceph
+  namespace: rook-ceph
+spec:
+  redirectScheme:
+    scheme: https
+    port: "443"
+    permanent: true
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: ceph-http-route
+  namespace: rook-ceph
+spec:
+  entryPoints:
+    - web
+  routes:
+    - match: Host(`ceph.cmdicncf.org`) && PathPrefix(`/`)
+      kind: Rule
+      services:
+        - name: rook-ceph-mgr-dashboard
+          port: 7000
+      middlewares:
+        - name: redirect-https-ceph
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: ceph-https-route
+  namespace: rook-ceph
+spec:
+  entryPoints:
+    - websecure
+  tls:
+    secretName: ceph.cmdicncf.org-tls
+  routes:
+    - match: Host(`ceph.cmdicncf.org`) && PathPrefix(`/`)
+      kind: Rule
+      services:
+        - name: rook-ceph-mgr-dashboard
+          port: 7000

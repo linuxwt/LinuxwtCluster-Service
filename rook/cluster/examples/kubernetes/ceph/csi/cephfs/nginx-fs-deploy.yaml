@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment 
+metadata: 
+  name: nginx-deploy-fs
+spec: 
+  replicas: 3
+  selector:
+    matchLabels:
+      name: nginx-deploy-fs
+  template: 
+    metadata: 
+      labels: 
+        name: nginx-deploy-fs
+    spec: 
+      containers: 
+        - name: nginx 
+          image: harbor.cmdicncf.org/cmdicncf/nginx:1.21.5
+          imagePullPolicy: IfNotPresent
+          ports: 
+            - containerPort: 80
+          volumeMounts:
+            - name: data
+              mountPath: "/usr/share/nginx/html"
+      volumes:
+      - name: data
+        persistentVolumeClaim:
+          claimName: nginx-fs-pvc
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: nginx-fs-pvc
+spec:
+  storageClassName: "rook-cephfs"
+  accessModes: 
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 1Gi
+
+
