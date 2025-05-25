@@ -1,0 +1,32 @@
+version: v1
+type: polardbx
+cluster:
+  name: pxc-product
+  gms:
+    image: registry:5000/polardbx-engine:v2.4.0_8.4.19
+    engine: galaxy
+    engine_version: "8.0"
+    host_group: [192.168.0.157, 192.168.0.158, 192.168.0.159]
+    resources:
+      mem_limit: 2G
+      cpu_limit: 2
+  cn:
+    image: registry:5000/polardbx-sql:v2.4.0_5.4.19
+    replica: 3
+    nodes:
+      - host: 192.168.0.157
+      - host: 192.168.0.158
+      - host: 192.168.0.159
+    resources:
+      mem_limit: 2G
+      cpu_limit: 2
+  dn:
+    image: registry:5000/polardbx-engine:v2.4.0_8.4.19
+    engine: galaxy
+    engine_version: "8.0"
+    replica: 1
+    nodes:
+      - host_group: [192.168.0.157, 192.168.0.158, 192.168.0.159]
+    resources:
+      mem_limit: 2G
+      cpu_limit: 2
